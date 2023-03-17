@@ -1,0 +1,64 @@
+//自主學習網站
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Rickroll</title>
+	<style>
+		#rickroll {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: none;
+			z-index: 9999;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<img src="https://media.tenor.com/x8v1oNUOmg4AAAAM/rickroll-roll.gif" alt="rickroll" id="rickroll">
+	<script>
+		const rickroll = document.getElementById("rickroll");
+		let dx = 7; // 每次移動的水平距離
+		let dy = 7; // 每次移動的垂直距離
+		let x = 0; // 初始水平位置
+		let y = 0; // 初始垂直位置
+		const maxRight = window.innerWidth - rickroll.offsetWidth; // 最大水平位置
+		const maxBottom = window.innerHeight - rickroll.offsetHeight; // 最大垂直位置
+		let keyPressed = []; // 用來存放已經按下的鍵
+		const correctKeySequence = ["r", "i", "c", "k", "r", "o", "l", "l"]; // 正確的鍵序列
+
+		const showRickRoll = (event) => {
+	  keyPressed.push(event.key.toLowerCase()); // 將按下的鍵轉換為小寫字母，並存放到 keyPressed 陣列中
+	  keyPressed = keyPressed.slice(-8); // 只保留最後 8 個按下的鍵
+	  if (keyPressed.join("") === correctKeySequence.join("")) { // 檢查是否與正確的鍵序列相同
+	    rickroll.style.display = "block";
+			alert("點擊會移動的圖片");
+		}
+		};
+		document.addEventListener("keydown", showRickRoll);
+		const moveRickRoll = () => {
+			rickroll.style.left = x + "px";
+			rickroll.style.top = y + "px";
+			x += dx;
+			y += dy;
+			if (x < 0 || x > maxRight) {
+				dx = -dx;
+				x += 2 * dx;
+			}
+			if (y < 0 || y > maxBottom) {
+				dy = -dy;
+				y += 2 * dy;
+			}
+			requestAnimationFrame(moveRickRoll);
+		};
+		moveRickRoll();
+                rickroll.onclick = function() {
+                    window.open("https://www.nksh.tyc.edu.tw/rickroll", "_blank", "width=" + screen.availWidth + ",height=" + screen.availHeight);
+										rickroll.style.display = "none";
+                }
+	</script>
+</body>
+</html>
